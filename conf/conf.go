@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 
-	"github.com/go-sql-driver/mysql"
+	"github.com/drrrMikado/mock-server-go/database/orm"
 	"gopkg.in/yaml.v2"
 )
 
@@ -13,7 +13,7 @@ var (
 )
 
 type Config struct {
-	Mysql *mysql.Config
+	Mysql *orm.Config
 }
 
 func Init() error {

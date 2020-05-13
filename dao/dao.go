@@ -2,6 +2,7 @@ package dao
 
 import (
 	"github.com/drrrMikado/mock-server-go/conf"
+	"github.com/drrrMikado/mock-server-go/database/orm"
 	"github.com/jinzhu/gorm"
 )
 
@@ -11,10 +12,11 @@ type Dao struct {
 }
 
 // New init mysql db
-func New(c *conf.Config) (dao *Dao) {
-	dao = &Dao{
+func New(c *conf.Config) (d *Dao) {
+	d = &Dao{
 		c: c,
 	}
+	d.db = orm.NewMySQL(c.Mysql)
 	return
 }
 
