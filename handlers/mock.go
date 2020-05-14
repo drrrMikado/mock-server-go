@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -26,6 +27,14 @@ func Handler(c *gin.Context) {
 		return
 	}
 	time.Sleep(d)
-	c.Data(m.StatusCode, m.Headers["Content-Type"], m.Body)
+	var headers map[string]string
+	if err:=json.Unmarshal([]byte(m.Headers), &headers); err !=nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"err_code": 1,
+			"err_msg":  err.Error(),
+		})
+		return
+	}
+	c.Data(m.StatusCode, headers["Content-Type"], m.Body)
 	return
 }
