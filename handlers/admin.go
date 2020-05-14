@@ -28,7 +28,7 @@ func Get(c *gin.Context) {
 func List(c *gin.Context) {
 	page, _ := strconv.ParseInt(c.Query("page"), 10, 64)
 	pageSize, _ := strconv.ParseInt(c.Query("pageSize"), 10, 64)
-	m, totalPage, err := s.GetMocks(page, pageSize)
+	m, totalCount, err := s.GetMocks(page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"err_code": 1,
@@ -37,10 +37,16 @@ func List(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"err_code":   0,
-		"err_msg":    "",
-		"data":       m,
-		"total_page": totalPage,
+		"err_code": 0,
+		"err_msg":  "",
+		"data": gin.H{
+			"items": m,
+			"paginator": gin.H{
+				"page":       page,
+				"pageSize":   pageSize,
+				"totalCount": totalCount,
+			},
+		},
 	})
 	return
 }
