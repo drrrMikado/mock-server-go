@@ -16,7 +16,8 @@ func main() {
 	if err := conf.Init(); err != nil {
 		panic(err)
 	}
-	services.New(conf.Conf)
+	s := services.New(conf.Conf)
+	handlers.Init(s)
 	r := gin.Default()
 	r.Use(middlewares.Cors())
 

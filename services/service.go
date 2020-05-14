@@ -15,9 +15,10 @@ type Service struct {
 	// waiter      sync.WaitGroup
 }
 
-func New(c *conf.Config) {
+func New(c *conf.Config) *Service {
 	s = &Service{
 		c:   c,
 		dao: dao.New(c),
 	}
+	return s
 }

@@ -8,7 +8,7 @@ import (
 
 type Dao struct {
 	c  *conf.Config
-	db *gorm.DB
+	DB *gorm.DB
 }
 
 // New init mysql db
@@ -16,11 +16,11 @@ func New(c *conf.Config) (d *Dao) {
 	d = &Dao{
 		c: c,
 	}
-	d.db = orm.NewMySQL(c.Mysql)
+	d.DB = orm.NewMySQL(c.Mysql)
 	return
 }
 
 // Close close the resource.
 func (d *Dao) Close() {
-	_ = d.db.Close()
+	_ = d.DB.Close()
 }

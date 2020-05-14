@@ -4,6 +4,7 @@ import (
 	time2 "time"
 
 	"github.com/drrrMikado/mock-server-go/internal/time"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
