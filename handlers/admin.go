@@ -8,45 +8,38 @@ import (
 )
 
 func Get(c *gin.Context) {
-	id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	id, _ := strconv.Atoi(c.Param("id"))
 	m, err := s.GetMock(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"err_code": 1,
-			"err_msg":  err.Error(),
+			"code":    1,
+			"message": err.Error(),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"err_code": 0,
-		"err_msg":  "",
-		"data":     m,
+		"code":    0,
+		"message": "",
+		"data":    m,
 	})
 	return
 }
 
 func List(c *gin.Context) {
-	page, _ := strconv.ParseInt(c.Query("page"), 10, 64)
-	pageSize, _ := strconv.ParseInt(c.Query("pageSize"), 10, 64)
-	m, totalCount, err := s.GetMocks(page, pageSize)
+	page, _ := strconv.Atoi(c.Query("page"))
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	mlp, err := s.GetMocks(page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"err_code": 1,
-			"err_msg":  err.Error(),
+			"code":    1,
+			"message": err.Error(),
 		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{
-		"err_code": 0,
-		"err_msg":  "",
-		"data": gin.H{
-			"items": m,
-			"paginator": gin.H{
-				"page":       page,
-				"pageSize":   pageSize,
-				"totalCount": totalCount,
-			},
-		},
+		"code":    0,
+		"message": "",
+		"data":    mlp,
 	})
 	return
 }

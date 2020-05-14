@@ -13,25 +13,25 @@ func Handler(c *gin.Context) {
 	m, err := s.GetMockByUriAndMethod(uri, c.Request.Method)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"err_code": 1,
-			"err_msg":  err.Error(),
+			"code":    1,
+			"message": err.Error(),
 		})
 		return
 	}
 	d, err := time.ParseDuration(m.Delay)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"err_code": 1,
-			"err_msg":  err.Error(),
+			"code":    1,
+			"message": err.Error(),
 		})
 		return
 	}
 	time.Sleep(d)
 	var headers map[string]string
-	if err:=json.Unmarshal([]byte(m.Headers), &headers); err !=nil {
+	if err := json.Unmarshal([]byte(m.Headers), &headers); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"err_code": 1,
-			"err_msg":  err.Error(),
+			"code":    1,
+			"message": err.Error(),
 		})
 		return
 	}

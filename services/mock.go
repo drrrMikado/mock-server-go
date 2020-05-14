@@ -6,7 +6,7 @@ import (
 	"github.com/drrrMikado/mock-server-go/models"
 )
 
-func (s *Service) GetMock(id int64) (m *models.Mock, err error) {
+func (s *Service) GetMock(id int) (m *models.Mock, err error) {
 	if id <= 0 {
 		err = errors.New("id must greater than zero")
 		return
@@ -16,7 +16,7 @@ func (s *Service) GetMock(id int64) (m *models.Mock, err error) {
 	return
 }
 
-func (s *Service) GetMocks(page, pageSize int64) (ms []models.Mock, count int64, err error) {
+func (s *Service) GetMocks(page, pageSize int) (mlp *models.MockListPage, err error) {
 	if page <= 0 || pageSize <= 0 {
 		err = errors.New("page or pageSize must greater than zero")
 		return
@@ -24,9 +24,21 @@ func (s *Service) GetMocks(page, pageSize int64) (ms []models.Mock, count int64,
 		err = errors.New("pageSize must lesser than 100")
 		return
 	}
+	var (
+		ms    []*models.Mock
+		count int
+	)
 	s.dao.DB.Model(&models.Mock{}).Count(&count)
 	if err = s.dao.DB.Offset((page - 1) * pageSize).Limit(pageSize).Find(&ms).Error; err != nil {
 		return
+	}
+	mlp = &models.MockListPage{
+		Items: ms,
+		Page: &models.Page{
+			PageSize: pageSize,
+			Page:     page,
+			Total:    count,
+		},
 	}
 	return
 }
