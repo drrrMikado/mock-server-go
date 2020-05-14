@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/drrrMikado/mock-server-go/conf"
+	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,7 +32,9 @@ func TestService_GetMocks(t *testing.T) {
 	assert.Greater(t, totalPage, int64(1))
 	assert.NotNil(t, m)
 	assert.Equal(t, 1, len(m))
-	assert.Nil(t, err)
+	if !gorm.IsRecordNotFoundError(err) {
+		assert.Nil(t, err)
+	}
 }
 
 func TestService_GetMockByUriAndMethod(t *testing.T) {
@@ -39,5 +42,7 @@ func TestService_GetMockByUriAndMethod(t *testing.T) {
 	assert.Error(t, err)
 	m, err := s.GetMockByUriAndMethod("/api/test1", "GET")
 	assert.NotNil(t, m)
-	assert.Nil(t, err)
+	if !gorm.IsRecordNotFoundError(err) {
+		assert.Nil(t, err)
+	}
 }
