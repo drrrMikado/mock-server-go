@@ -30,3 +30,15 @@ func (s *Service) GetMocks(page, pageSize int64) (ms []models.Mock, count int64,
 	}
 	return
 }
+
+func (s *Service) GetMockByUriAndMethod(uri, method string) (m *models.Mock, err error) {
+	if len(uri) == 0 || len(method) == 0 {
+		err = errors.New("uri or method must has value")
+		return
+	}
+	m = &models.Mock{}
+	err = s.dao.DB.Where("`uri` = ?", uri).
+		Where("`method` = ?", method).
+		First(m).Error
+	return
+}

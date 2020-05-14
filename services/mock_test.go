@@ -33,3 +33,11 @@ func TestService_GetMocks(t *testing.T) {
 	assert.Equal(t, 1, len(m))
 	assert.Nil(t, err)
 }
+
+func TestService_GetMockByUriAndMethod(t *testing.T) {
+	_, err := s.GetMockByUriAndMethod("", "")
+	assert.Error(t, err)
+	m, err := s.GetMockByUriAndMethod("/api/test1", "GET")
+	assert.NotNil(t, m)
+	assert.Nil(t, err)
+}
