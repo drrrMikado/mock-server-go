@@ -4,6 +4,3 @@ mysql:
   active = 20
   idle = 10
   idleTimeout ="4h"
-  queryTimeout = "800ms"
-  execTimeout = "800ms"
-  tranTimeout = "800ms"
