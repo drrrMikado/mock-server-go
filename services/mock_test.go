@@ -14,10 +14,22 @@ func init() {
 	New(conf.Conf)
 }
 
-func TestService_GetMockCfg(t *testing.T) {
-	_, err := s.GetMockCfg(int64(-1))
+func TestService_GetMock(t *testing.T) {
+	_, err := s.GetMock(int64(-1))
 	assert.Error(t, err)
-	m, err := s.GetMockCfg(int64(1))
+	m, err := s.GetMock(int64(1))
 	assert.NotNil(t, m)
+	assert.Nil(t, err)
+}
+
+func TestService_GetMocks(t *testing.T) {
+	_, _, err := s.GetMocks(int64(-1), int64(-1))
+	assert.Error(t, err)
+	_, _, err = s.GetMocks(int64(-1), int64(101))
+	assert.Error(t, err)
+	m, totalPage, err := s.GetMocks(int64(1), int64(1))
+	assert.Greater(t, totalPage, int64(1))
+	assert.NotNil(t, m)
+	assert.Equal(t, 1, len(m))
 	assert.Nil(t, err)
 }
