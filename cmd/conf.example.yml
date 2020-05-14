@@ -3,4 +3,4 @@ mysql:
   dsn: "username:password@tcp(127.0.0.1:3312)/database?parseTime=true&loc=Local&charset=utf8,utf8mb4"
   active: 20
   idle: 10
-  idleTimeout:"4h"
+  idleTimeout: "4h"
