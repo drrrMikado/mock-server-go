@@ -1,4 +1,4 @@
-package handlers
+package http
 
 import (
 	"bytes"
@@ -32,7 +32,7 @@ func TestGetWithErrorID(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 	router.GET("/test/get/error/:id", func(c *gin.Context) {
-		Get(c)
+		get(c)
 		return
 	})
 	w := performRequest(router, "GET", "/test/get/error/-1")
@@ -44,7 +44,7 @@ func TestUpdateWithErrorID(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 	router.POST("/test/update/error/:id", func(c *gin.Context) {
-		Update(c)
+		update(c)
 		return
 	})
 	w := performRequest(router, "POST", "/test/update/error/-1")
@@ -56,11 +56,11 @@ func TestAddOrUpdateWithEmptyField(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	router := gin.New()
 	router.POST("/test/add/empty/field", func(c *gin.Context) {
-		Add(c)
+		add(c)
 		return
 	})
 	router.POST("/test/update/empty/field", func(c *gin.Context) {
-		Update(c)
+		update(c)
 		return
 	})
 	boundary := "--testBoundary"

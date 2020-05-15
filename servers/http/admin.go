@@ -1,4 +1,4 @@
-package handlers
+package http
 
 import (
 	"net/http"
@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Get(c *gin.Context) {
+func get(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	m, err := s.GetMock(id)
+	m, err := svc.GetMock(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
@@ -26,10 +26,10 @@ func Get(c *gin.Context) {
 	return
 }
 
-func List(c *gin.Context) {
+func list(c *gin.Context) {
 	page, _ := strconv.Atoi(c.Query("page"))
 	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
-	mlp, err := s.GetMocks(page, pageSize)
+	mlp, err := svc.GetMocks(page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
@@ -45,7 +45,7 @@ func List(c *gin.Context) {
 	return
 }
 
-func Add(c *gin.Context) {
+func add(c *gin.Context) {
 	mp := &models.AddMockParam{}
 	if err := c.ShouldBind(mp); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -54,7 +54,7 @@ func Add(c *gin.Context) {
 		})
 		return
 	}
-	m, err := s.AddMock(mp)
+	m, err := svc.AddMock(mp)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
@@ -70,7 +70,7 @@ func Add(c *gin.Context) {
 	return
 }
 
-func Update(c *gin.Context) {
+func update(c *gin.Context) {
 	mp := &models.UpdateMockParam{}
 	if err := c.ShouldBind(mp); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -79,7 +79,7 @@ func Update(c *gin.Context) {
 		})
 		return
 	}
-	if err := s.UpdateMock(mp); err != nil {
+	if err := svc.UpdateMock(mp); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
 			"message": err.Error(),
@@ -94,9 +94,9 @@ func Update(c *gin.Context) {
 	return
 }
 
-func Delete(c *gin.Context) {
+func del(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Param("id"), 10, 64)
-	if err := s.DeleteMock(id); err != nil {
+	if err := svc.DeleteMock(id); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
 			"message": err.Error(),

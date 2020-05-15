@@ -1,4 +1,4 @@
-package handlers
+package http
 
 import (
 	"encoding/json"
@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Handler(c *gin.Context) {
+func mockHandler(c *gin.Context) {
 	uri := c.Param("uri")
-	m, err := s.GetMockByUriAndMethod(uri, c.Request.Method)
+	m, err := svc.GetMockByUriAndMethod(uri, c.Request.Method)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"code":    1,
