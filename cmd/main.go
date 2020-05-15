@@ -30,8 +30,8 @@ func main() {
 	{
 		adminGroup.GET("/mock/:id", handlers.Get)
 		adminGroup.GET("/mock", handlers.List)
-		adminGroup.POST("/mock", handlers.Save)
-		adminGroup.POST("/mock/:id", handlers.Update)
+		adminGroup.POST("/mock", handlers.Add)
+		adminGroup.PUT("/mock", handlers.Update)
 		adminGroup.DELETE("/mock/:id", handlers.Delete)
 	}
 	go func() { // pprof

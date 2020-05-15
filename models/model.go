@@ -5,7 +5,7 @@ import (
 )
 
 type Mock struct {
-	ID          uint            `json:"id"`
+	ID          uint64          `json:"id"`
 	Description string          `json:"description"`
 	Uri         string          `json:"uri"`
 	Method      string          `json:"method"`
@@ -16,13 +16,24 @@ type Mock struct {
 }
 
 type AddMockParam struct {
-	Description string `json:"description"`
-	Uri         string `json:"uri"`
-	Method      string `json:"method"`
-	Delay       string `json:"delay"`
-	StatusCode  int    `json:"status_code"`
-	Headers     string `json:"headers"`
-	Body        string `json:"body"`
+	Description string `json:"description" form:"description" binding:"required"`
+	Uri         string `json:"uri" form:"uri" binding:"required"`
+	Method      string `json:"method" form:"method" binding:"required"`
+	Delay       string `json:"delay" form:"delay" binding:"required"`
+	StatusCode  int    `json:"status_code" form:"status_code" binding:"required"`
+	Headers     string `json:"headers" form:"headers"`
+	Body        string `json:"body" form:"body"`
+}
+
+type UpdateMockParam struct {
+	ID          uint64 `json:"id" form:"id" binding:"required"`
+	Description string `json:"description" form:"description" binding:"required"`
+	Uri         string `json:"uri" form:"uri" binding:"required"`
+	Method      string `json:"method" form:"method" binding:"required"`
+	Delay       string `json:"delay" form:"delay" binding:"required"`
+	StatusCode  int    `json:"status_code" form:"status_code" binding:"required"`
+	Headers     string `json:"headers" form:"headers"`
+	Body        string `json:"body" form:"body"`
 }
 
 type Page struct {
