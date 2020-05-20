@@ -3,6 +3,8 @@ package conf
 import (
 	"bytes"
 	"io/ioutil"
+	"os"
+	"strings"
 
 	"github.com/drrrMikado/mock-server-go/database/orm"
 	"gopkg.in/yaml.v2"
@@ -17,7 +19,13 @@ type Config struct {
 }
 
 func Init() error {
-	b, err := ioutil.ReadFile("cmd/conf.yml")
+	filename := "cmd/conf.yml"
+	workDirEnv := os.Getenv("WORK_DIR")
+	if workDirEnv != "" {
+		workDirEnv = strings.TrimSuffix(workDirEnv, "/")
+		filename = workDirEnv + "/cmd/conf.yml"
+	}
+	b, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return err
 	}
