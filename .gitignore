@@ -1,3 +1,5 @@
 .idea/
 cmd/conf.yml
 cmd/mock-server
+log/
+!log/.gitkeep
