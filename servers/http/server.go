@@ -29,6 +29,13 @@ func Init(s *services.Service) {
 	// admin
 	adminEngine := gin.Default()
 	adminEngine.Use(middlewares.Cors())
+	adminEngine.NoRoute(func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{
+			"code":    1,
+			"message": http.StatusText(http.StatusNotFound),
+		})
+		return
+	})
 	adminGroup := adminEngine.Group("/")
 	{
 		adminGroup.GET("/mock/:id", get)
