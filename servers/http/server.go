@@ -16,6 +16,7 @@ var (
 )
 
 func Init(s *services.Service) {
+	gin.SetMode(gin.ReleaseMode)
 	svc = s
 	// mock
 	mockEngine := gin.Default()

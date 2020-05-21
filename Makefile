@@ -7,6 +7,7 @@ GO_RUN=$(GO_CMD) run
 MAIN_FILE=cmd/main.go
 # added .gitignore
 BINARY_NAME=cmd/mock-server
+LOG_FILE=log/run.log
 
 all: test build
 build:
@@ -15,3 +16,5 @@ test:
 	@WORK_DIR=$(CURRENT_DIR) $(GO_TEST) -v ./...
 run:
 	@$(GO_RUN) $(MAIN_FILE)
+run-bg: build
+	$(BINARY_NAME=cmd/mock-server) &>$(LOG_FILE) &
