@@ -17,4 +17,4 @@ test:
 run:
 	@$(GO_RUN) $(MAIN_FILE)
 run-bg: build
-	$(BINARY_NAME=cmd/mock-server) &>$(LOG_FILE) &
+	$(BINARY_NAME=cmd/mock-server) &>>$(LOG_FILE) &
